@@ -721,7 +721,39 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.f-brand .logos img { height: 48px; width: auto; margin-bottom: 16px; }
+/* Footer Logo: High Contrast for Deep Corporate Navy Background */
+.f-brand .logos {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  margin-bottom: 18px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+}
+.f-brand .logos:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(56, 189, 248, 0.55);
+  box-shadow: 0 6px 22px rgba(56, 189, 248, 0.22);
+  transform: translateY(-2px);
+}
+.f-brand .logos img { 
+  height: 48px; 
+  width: auto; 
+  margin-bottom: 0; 
+  /* Radiant crisp white with GEM cyan glow for 100% contrast against dark navy */
+  filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(56, 189, 248, 0.45));
+  -webkit-filter: brightness(0) invert(1) drop-shadow(0 2px 8px rgba(56, 189, 248, 0.45));
+  transition: filter 0.3s ease;
+}
+.f-brand .logos:hover img {
+  filter: brightness(0) invert(1) drop-shadow(0 0 14px rgba(56, 189, 248, 0.8));
+  -webkit-filter: brightness(0) invert(1) drop-shadow(0 0 14px rgba(56, 189, 248, 0.8));
+}
 .f-desc { font-size: 0.92rem; line-height: 1.65; color: #a9bed1; margin: 0 0 18px; }
 
 .f-trust-chips {
@@ -4412,6 +4444,442 @@
   margin: 0 !important;
   font-weight: 400 !important;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.85) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   COMPREHENSIVE RESPONSIVE DESIGN FOR ALL DEVICES
+   (Desktop, Laptop, Tablet / iPad, Mobile & iPhone)
+───────────────────────────────────────────────────────────── */
+
+/* 1. Global Reset & Mobile Safeguards */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 2. iOS Safari Form Auto-Zoom Prevention */
+@media screen and (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="number"],
+  select,
+  textarea {
+    font-size: 16px !important; /* Prevents iOS auto-zoom on focus */
+  }
+}
+
+/* 3. Safe-Area Insets for iPhone (Notch & Dynamic Island) */
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+}
+
+.header {
+  padding-top: max(12px, var(--sat));
+}
+
+.float {
+  bottom: calc(20px + var(--sab)) !important;
+  right: calc(16px + var(--sar)) !important;
+}
+
+/* 4. Fluid Wrapper Padding */
+@media (max-width: 768px) {
+  .wrap {
+    width: min(1280px, 100% - 32px);
+  }
+  .section {
+    padding: clamp(48px, 8vw, 80px) 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .wrap {
+    width: min(1280px, 100% - 24px);
+  }
+}
+
+/* 5. Header & Mobile Navigation Menu */
+@media (max-width: 1024px) {
+  .header-in {
+    width: min(1360px, 100% - 24px);
+    padding: 8px 18px;
+    gap: 16px;
+  }
+  .burger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.05);
+    z-index: 105;
+  }
+  .nav {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background: #ffffff;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: calc(84px + var(--sat)) 28px calc(36px + var(--sab));
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    z-index: 100;
+    gap: 14px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s ease;
+    transform: translateY(-8px);
+  }
+  .nav.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .nav a:not(.btn) {
+    font-size: 1.28rem;
+    font-weight: 600;
+    color: var(--navy);
+    padding: 12px 0;
+    width: 100%;
+    border-bottom: 1px solid #f1f5f9;
+    display: block;
+  }
+  .nav a:not(.btn):hover, .nav a.active-nav-link {
+    color: var(--gem-blue);
+    padding-left: 6px;
+  }
+  .nav-action-btns {
+    flex-direction: column;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 16px;
+    gap: 12px;
+  }
+  .nav-action-btns .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 13px 20px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .logos img {
+    height: 46px;
+    max-height: 48px;
+  }
+  .header.solid .logos img {
+    height: 40px;
+  }
+}
+
+@media (max-width: 380px) {
+  .header-in {
+    padding: 6px 14px;
+  }
+  .logos img {
+    height: 38px;
+  }
+}
+
+/* 6. Homepage Hero & Metrics */
+@media (max-width: 768px) {
+  .home-hero {
+    min-height: auto;
+    padding: calc(96px + var(--sat)) 0 54px;
+  }
+  .hero-trust-tag {
+    font-size: 0.78rem;
+    padding: 6px 14px;
+    margin-bottom: 16px;
+    max-width: 100%;
+  }
+  .hero-main-title {
+    font-size: clamp(2.2rem, 7.5vw, 3.4rem) !important;
+    line-height: 1.12 !important;
+    margin-bottom: 14px !important;
+  }
+  .hero-tagline-sub {
+    font-size: 1.15rem !important;
+    margin-bottom: 14px !important;
+  }
+  .hero-description {
+    font-size: 0.98rem !important;
+    line-height: 1.65 !important;
+    margin-bottom: 24px !important;
+  }
+  .hero-action-buttons {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .hero-action-buttons .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 13px 22px;
+  }
+  .hero-metric-strip {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+    padding: 18px 16px !important;
+    border-radius: 14px !important;
+  }
+  .hms-item b {
+    font-size: clamp(1.4rem, 5vw, 1.85rem) !important;
+  }
+  .hms-item span {
+    font-size: 0.74rem !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-metric-strip {
+    gap: 10px !important;
+    padding: 14px 12px !important;
+  }
+  .hms-item b {
+    font-size: 1.3rem !important;
+  }
+  .hms-item span {
+    font-size: 0.68rem !important;
+    letter-spacing: 0.02em !important;
+  }
+}
+
+/* 7. Homepage Sections: Intro, Cards, Why Choose */
+@media (max-width: 768px) {
+  .intro-stats-quad {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    padding: 16px !important;
+  }
+  .isq-num {
+    font-size: 1.25rem !important;
+  }
+  .isq-label {
+    font-size: 0.72rem !important;
+  }
+  .intro-checklist {
+    gap: 10px;
+    margin: 18px 0 24px;
+  }
+  .ic-item {
+    font-size: 0.92rem;
+  }
+  .why-grid {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+  .why-card {
+    padding: 24px 20px !important;
+  }
+  .why-stat-box b {
+    font-size: 1.9rem !important;
+  }
+}
+
+/* 8. Project Detail Page Responsiveness */
+@media (max-width: 860px) {
+  .pd-hero {
+    min-height: auto !important;
+    padding: calc(96px + var(--sat)) 0 44px !important;
+  }
+  .pd-hero-content {
+    max-width: 100% !important;
+  }
+  .pd-main-title {
+    font-size: clamp(2.2rem, 7vw, 3.2rem) !important;
+    line-height: 1.15 !important;
+  }
+  .pd-hero-pills-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    margin-bottom: 24px !important;
+  }
+  .pd-pill-box {
+    padding: 10px 12px !important;
+  }
+  .pd-pill-box b {
+    font-size: 0.92rem !important;
+  }
+  .pd-hero-actions {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+  .pd-hero-actions .btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .pd-about-triad-grid {
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 10px !important;
+  }
+  .pd-specs-dashboard-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+  }
+  .pd-spec-box {
+    padding: 16px 14px !important;
+  }
+  .psb-value {
+    font-size: 1.25rem !important;
+  }
+  .pd-amenities-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
+  .pd-layout-header-card {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+  }
+  .pd-layout-actions {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+  .pd-layout-actions .btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .pd-about-triad-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+  .pd-amenities-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .pd-specs-dashboard-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .pd-gallery-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .distances-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* 9. Lightboxes & Modals (Site Visit & Brochure) */
+.lightbox {
+  padding: 16px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.modal-card {
+  max-height: calc(90vh - var(--sab));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .lightbox {
+    padding: 12px;
+  }
+  .modal-card {
+    padding: 24px 18px !important;
+    border-radius: 18px !important;
+    max-height: calc(94vh - var(--sab)) !important;
+  }
+  .modal-head h3 {
+    font-size: 1.45rem !important;
+  }
+  .modal-close {
+    top: 12px !important;
+    right: 12px !important;
+    width: 34px !important;
+    height: 34px !important;
+  }
+  .modal-form .form-row {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+  .lb-frame {
+    max-width: 100% !important;
+  }
+  .lb-frame img {
+    max-height: 65vh !important;
+  }
+  .lb-cap {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+/* 10. Forms & Enquiry Containers */
+@media (max-width: 860px) {
+  .enquiry-wrap-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  .contact-two-column-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  .form-row {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+}
+
+/* 11. Floating Action Buttons for Mobile */
+@media (max-width: 640px) {
+  .float {
+    gap: 8px !important;
+  }
+  .wa-btn {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .ring {
+    width: 44px !important;
+    height: 44px !important;
+  }
+}
+
+/* 12. Footer Touch Optimizations */
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  .f-col a, .f-col p {
+    font-size: 0.95rem;
+    padding: 3px 0;
+  }
+  .f-trust-chips {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
 }
 
 
