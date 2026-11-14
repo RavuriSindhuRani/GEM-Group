@@ -1,0 +1,34 @@
+# GEM Group — Production Apache / LiteSpeed Configuration
+# Serves React SPA at root while preserving WordPress at /blog/ under the exact same domain
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1. Direct pass-through for WordPress blog and WP core assets
+  RewriteRule ^blog(/.*)?$ - [L]
+  RewriteRule ^wp-admin(/.*)?$ - [L]
+  RewriteRule ^wp-includes(/.*)?$ - [L]
+  RewriteRule ^wp-content(/.*)?$ - [L]
+  RewriteRule ^wp-json(/.*)?$ - [L]
+  RewriteRule ^xmlrpc\.php$ - [L]
+
+  # 2. Existing files, directories, and assets pass through directly
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # 3. All other paths route to Vite React SPA index.html
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# Caching and Compression for High Performance
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
